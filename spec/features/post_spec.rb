@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe 'navigate' do
   before do
-    user = FactoryGirl.create(:user)
-    login_as(user, :scope => :user)
+    @user = FactoryGirl.create(:user)
+    login_as(@user, :scope => :user)
   end
 
   describe 'index' do
@@ -24,6 +24,15 @@ describe 'navigate' do
       post2 = FactoryGirl.build_stubbed(:second_post)
       visit posts_path
       expect(page).to have_content(/Rationale|content/)
+    end
+  end
+
+  describe 'new' do
+    it 'has a link from the homepage' do
+      visit root_path
+
+      click_link("new_post_from_nav")
+      expect(page.status_code).to eq(200)
     end
   end
 
@@ -59,7 +68,6 @@ describe 'navigate' do
     end
 
     it 'can be reached by clicking edit on index page' do
-      post = FactoryGirl.create(:post)
       visit posts_path
 
       click_link("edit_#{@post.id}")
