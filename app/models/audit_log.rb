@@ -1,5 +1,5 @@
 class AuditLog < ApplicationRecord
-  enum status: { pending: 0, confirmed: 1 }
+  enum status: {pending: 0, confirmed: 1 }
 
   belongs_to :user
 
@@ -12,6 +12,7 @@ class AuditLog < ApplicationRecord
   scope :by_start_date, -> { order('start_date DESC') }
 
   private
+
     def set_end_date
       self.end_date = Date.today
     end
